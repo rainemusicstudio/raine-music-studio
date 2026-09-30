@@ -45,6 +45,6 @@ export async function POST(req) {
     return NextResponse.json({ url: session.url });
   } catch (err) {
     console.error(err);
-    return NextResponse.json({ error: "Something went wrong starting checkout." }, { status: 500 });
+    return NextResponse.json({ error: `Something went wrong starting checkout. (${String(err?.message || err).slice(0, 160)})` }, { status: 500 });
   }
 }
