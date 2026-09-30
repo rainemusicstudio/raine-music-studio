@@ -197,3 +197,6 @@ img { max-width: 100%; }
   .dot-cluster { top: 0; bottom: auto; transform: scale(0.32); transform-origin: top right; }
   .hero .shape.cranberry { transform: scale(0.45); transform-origin: bottom left; }
 }
+
+.field-row { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; }
+@media (max-width: 560px) { .field-row { grid-template-columns: 1fr; } }

@@ -6,9 +6,14 @@ import { TRIAL } from "../../../../lib/plans";
 
 export async function POST(req) {
   try {
-    const { start, name, email, focus } = await req.json();
+    const { start, name, email, focus, lessonType, forWhom, studentName, studentAge, experience, heardFrom } = await req.json();
+    const forChild = forWhom === "child";
+    const clean = (v, n = 120) => (typeof v === "string" ? v.trim().slice(0, n) : "") || null;
     if (!start || !name?.trim() || !email?.includes("@")) {
       return NextResponse.json({ error: "Please add your name, email, and a time." }, { status: 400 });
+    }
+    if (!lessonType || !experience || (forChild && (!studentName?.trim() || !studentAge))) {
+      return NextResponse.json({ error: "Please fill in the lesson details." }, { status: 400 });
     }
     if (!isOpenSlot(start, await bookedTimes())) {
       return NextResponse.json({ error: "That time was just taken. Please pick another." }, { status: 409 });
@@ -41,6 +46,10 @@ export async function POST(req) {
       const { error } = await supabase.from("bookings").insert({
         kind: "trial", start_at: start, minutes: TRIAL.minutes, status: "pending",
         name: name.trim(), email: email.trim(), focus: focus || null, stripe_session_id: session.id,
+        lesson_type: clean(lessonType), for_child: forChild,
+        student_name: forChild ? clean(studentName) : null,
+        student_age: forChild ? parseInt(studentAge, 10) || null : null,
+        experience: clean(experience), heard_from: clean(heardFrom),
       });
       if (error) throw error;
     }

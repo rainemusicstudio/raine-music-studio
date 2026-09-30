@@ -32,3 +32,11 @@ create table if not exists students (
 -- Only the website's server (service key) can read or write these for now.
 alter table bookings enable row level security;
 alter table students enable row level security;
+
+-- Added 2026-09-30: extra trial booking details
+alter table bookings add column if not exists lesson_type text;
+alter table bookings add column if not exists for_child boolean default false;
+alter table bookings add column if not exists student_name text;
+alter table bookings add column if not exists student_age int;
+alter table bookings add column if not exists experience text;
+alter table bookings add column if not exists heard_from text;
