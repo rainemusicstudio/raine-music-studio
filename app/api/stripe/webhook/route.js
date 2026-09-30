@@ -7,7 +7,7 @@ export async function POST(req) {
   const body = await req.text();
   let event;
   try {
-    event = stripe().webhooks.constructEvent(body, req.headers.get("stripe-signature"), process.env.STRIPE_WEBHOOK_SECRET);
+    event = stripe().webhooks.constructEvent(body, req.headers.get("stripe-signature"), process.env.STRIPE_WEBHOOK_SECRET?.trim());
   } catch (err) {
     console.error("Webhook signature check failed:", err.message);
     return NextResponse.json({ error: "Bad signature" }, { status: 400 });
