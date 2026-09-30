@@ -38,8 +38,8 @@ export async function POST(req) {
       }],
       subscription_data: { metadata },
       metadata,
-      success_url: `${siteUrl()}/welcome?type=membership&session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${siteUrl()}/join?canceled=1`,
+      success_url: `${siteUrl(req)}/welcome?type=membership&session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${siteUrl(req)}/join?canceled=1`,
     });
 
     return NextResponse.json({ url: session.url });

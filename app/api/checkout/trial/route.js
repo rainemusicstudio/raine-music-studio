@@ -31,8 +31,8 @@ export async function POST(req) {
       }],
       metadata: { kind: "trial", start, name: name.trim(), focus: (focus || "").slice(0, 400) },
       expires_at: Math.floor(Date.now() / 1000) + 30 * 60, // hold the time for 30 minutes
-      success_url: `${siteUrl()}/welcome?type=trial&session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${siteUrl()}/trial?canceled=1`,
+      success_url: `${siteUrl(req)}/welcome?type=trial&session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${siteUrl(req)}/trial?canceled=1`,
     });
 
     // Hold the slot while they pay. The Stripe webhook confirms or releases it.
