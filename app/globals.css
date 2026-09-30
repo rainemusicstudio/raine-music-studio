@@ -200,3 +200,5 @@ img { max-width: 100%; }
 
 .field-row { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; }
 @media (max-width: 560px) { .field-row { grid-template-columns: 1fr; } }
+
+.hint { font-size: 14px; color: var(--text-muted); margin-top: -4px; }

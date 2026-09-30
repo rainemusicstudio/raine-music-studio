@@ -6,7 +6,7 @@ import { TRIAL } from "../../../../lib/plans";
 
 export async function POST(req) {
   try {
-    const { start, name, email, focus, lessonType, forWhom, studentName, studentAge, ageRange, experience, heardFrom, phone, smsOptIn } = await req.json();
+    const { start, name, email, focus, lessonType, forWhom, studentName, studentAge, ageRange, experience, heardFrom, phone, smsOptIn, interests } = await req.json();
     const forChild = forWhom === "child";
     const clean = (v, n = 120) => (typeof v === "string" ? v.trim().slice(0, n) : "") || null;
     if (!start || !name?.trim() || !email?.includes("@")) {
@@ -56,6 +56,7 @@ export async function POST(req) {
         student_age: forChild ? parseInt(studentAge, 10) || null : null,
         experience: clean(experience), heard_from: clean(heardFrom),
         age_range: forChild ? null : clean(ageRange, 20),
+        interests: Array.isArray(interests) ? interests.filter((x) => typeof x === "string").slice(0, 12).map((x) => x.slice(0, 60)) : [],
         phone: phoneE164, sms_opt_in: smsOptIn === true,
         sms_opt_in_at: smsOptIn === true ? new Date().toISOString() : null,
       });

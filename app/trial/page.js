@@ -11,6 +11,7 @@ function dayKey(iso) {
 const LESSON_TYPES = ["Voice", "Piano", "Music theory", "Songwriting", "Logic Pro & home recording", "Not sure yet"];
 const EXPERIENCE = ["Brand new", "Some experience", "Experienced", "Advanced / professional"];
 const AGE_RANGES = ["18–29", "30–39", "40–49", "50–59", "60+"];
+const COURSES = ["Music theory", "Songwriting", "Home recording & Logic Pro", "Ear training", "Sight-singing", "Audition prep", "Vocal health", "Group workshops"];
 const HEARD_FROM = ["Google search", "Instagram", "Facebook", "TikTok", "A friend or family member", "Thumbtack", "Another teacher or school", "Other"];
 
 function timeLabel(iso) {
@@ -23,10 +24,11 @@ export default function TrialPage() {
   const [form, setForm] = useState({
     name: "", email: "", focus: "",
     lessonType: "", forWhom: "me", studentName: "", studentAge: "", ageRange: "", experience: "", heardFrom: "",
-    phone: "", smsOptIn: false,
+    phone: "", smsOptIn: false, interests: [],
   });
   const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
   const child = form.forWhom === "child";
+  const toggleInterest = (c) => setForm({ ...form, interests: form.interests.includes(c) ? form.interests.filter((x) => x !== c) : [...form.interests, c] });
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
 
@@ -135,6 +137,15 @@ export default function TrialPage() {
           <input type="checkbox" checked={form.smsOptIn} onChange={(e) => setForm({ ...form, smsOptIn: e.target.checked })} />
           <span>Text me booking confirmations, lesson reminders, and schedule updates from Raine Music Studio. Up to a few messages a week. Msg &amp; data rates may apply. Reply STOP to opt out. (Optional)</span>
         </label>
+        <div className="field">
+          <label>Any classes or courses you&apos;d like to hear about? (optional)</label>
+          <span className="hint">Pick any. I&apos;ll email you when they open.</span>
+          <div className="choice-grid">
+            {COURSES.map((c) => (
+              <button type="button" key={c} className="choice" aria-pressed={form.interests.includes(c)} onClick={() => toggleInterest(c)}>{c}</button>
+            ))}
+          </div>
+        </div>
         <div className="field">
           <label htmlFor="heardFrom">How did you hear about the studio? (optional)</label>
           <select id="heardFrom" value={form.heardFrom} onChange={set("heardFrom")}>

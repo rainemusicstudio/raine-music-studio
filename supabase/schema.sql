@@ -46,3 +46,6 @@ alter table bookings add column if not exists phone text;
 alter table bookings add column if not exists sms_opt_in boolean default false;
 alter table bookings add column if not exists sms_opt_in_at timestamptz;
 alter table bookings add column if not exists age_range text;
+
+-- Added 2026-09-30: classes/courses they'd like to hear about
+alter table bookings add column if not exists interests text[] default '{}';
