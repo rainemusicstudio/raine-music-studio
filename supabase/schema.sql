@@ -40,3 +40,9 @@ alter table bookings add column if not exists student_name text;
 alter table bookings add column if not exists student_age int;
 alter table bookings add column if not exists experience text;
 alter table bookings add column if not exists heard_from text;
+
+-- Added 2026-09-30: phone, text opt-in, adult age range
+alter table bookings add column if not exists phone text;
+alter table bookings add column if not exists sms_opt_in boolean default false;
+alter table bookings add column if not exists sms_opt_in_at timestamptz;
+alter table bookings add column if not exists age_range text;

@@ -10,6 +10,7 @@ function dayKey(iso) {
 }
 const LESSON_TYPES = ["Voice", "Piano", "Music theory", "Songwriting", "Logic Pro & home recording", "Not sure yet"];
 const EXPERIENCE = ["Brand new", "Some experience", "Experienced", "Advanced / professional"];
+const AGE_RANGES = ["18–29", "30–39", "40–49", "50–59", "60+"];
 const HEARD_FROM = ["Google search", "Instagram", "Facebook", "TikTok", "A friend or family member", "Thumbtack", "Another teacher or school", "Other"];
 
 function timeLabel(iso) {
@@ -21,7 +22,8 @@ export default function TrialPage() {
   const [picked, setPicked] = useState(null);
   const [form, setForm] = useState({
     name: "", email: "", focus: "",
-    lessonType: "", forWhom: "me", studentName: "", studentAge: "", experience: "", heardFrom: "",
+    lessonType: "", forWhom: "me", studentName: "", studentAge: "", ageRange: "", experience: "", heardFrom: "",
+    phone: "", smsOptIn: false,
   });
   const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
   const child = form.forWhom === "child";
@@ -96,6 +98,15 @@ export default function TrialPage() {
             <button type="button" className="choice" aria-pressed={child} onClick={() => setForm({ ...form, forWhom: "child" })}>My child</button>
           </div>
         </div>
+        {!child && (
+          <div className="field">
+            <label htmlFor="ageRange">Your age range</label>
+            <select id="ageRange" required value={form.ageRange} onChange={set("ageRange")}>
+              <option value="" disabled>Choose one</option>
+              {AGE_RANGES.map((t) => <option key={t}>{t}</option>)}
+            </select>
+          </div>
+        )}
         {child && (
           <div className="field-row">
             <div className="field"><label htmlFor="studentName">Student&apos;s name</label><input id="studentName" required value={form.studentName} onChange={set("studentName")} /></div>
@@ -118,7 +129,12 @@ export default function TrialPage() {
       <section style={{ display: "flex", flexDirection: "column", gap: 16 }}>
         <h2 className="eyebrow" style={{ margin: 0 }}>3 · {child ? "Parent or guardian" : "About you"}</h2>
         <div className="field"><label htmlFor="name">{child ? "Your name (parent or guardian)" : "Your name"}</label><input id="name" required value={form.name} onChange={set("name")} /></div>
-        <div className="field"><label htmlFor="email">Email</label><input id="email" type="email" required value={form.email} onChange={set("email")} /></div>
+        <div className="field"><label htmlFor="email">Email</label><input id="email" type="email" autoComplete="email" required value={form.email} onChange={set("email")} /></div>
+        <div className="field"><label htmlFor="phone">Mobile phone</label><input id="phone" type="tel" autoComplete="tel" inputMode="tel" required placeholder="(319) 555-0123" value={form.phone} onChange={set("phone")} /></div>
+        <label className="check">
+          <input type="checkbox" checked={form.smsOptIn} onChange={(e) => setForm({ ...form, smsOptIn: e.target.checked })} />
+          <span>Text me booking confirmations, lesson reminders, and schedule updates from Raine Music Studio. Up to a few messages a week. Msg &amp; data rates may apply. Reply STOP to opt out. (Optional)</span>
+        </label>
         <div className="field">
           <label htmlFor="heardFrom">How did you hear about the studio? (optional)</label>
           <select id="heardFrom" value={form.heardFrom} onChange={set("heardFrom")}>

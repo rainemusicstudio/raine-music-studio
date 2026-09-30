@@ -6,13 +6,18 @@ import { TRIAL } from "../../../../lib/plans";
 
 export async function POST(req) {
   try {
-    const { start, name, email, focus, lessonType, forWhom, studentName, studentAge, experience, heardFrom } = await req.json();
+    const { start, name, email, focus, lessonType, forWhom, studentName, studentAge, ageRange, experience, heardFrom, phone, smsOptIn } = await req.json();
     const forChild = forWhom === "child";
     const clean = (v, n = 120) => (typeof v === "string" ? v.trim().slice(0, n) : "") || null;
     if (!start || !name?.trim() || !email?.includes("@")) {
       return NextResponse.json({ error: "Please add your name, email, and a time." }, { status: 400 });
     }
-    if (!lessonType || !experience || (forChild && (!studentName?.trim() || !studentAge))) {
+    const digits = String(phone || "").replace(/\D/g, "");
+    const phoneE164 = digits.length === 10 ? `+1${digits}` : digits.length === 11 && digits.startsWith("1") ? `+${digits}` : null;
+    if (!phoneE164) {
+      return NextResponse.json({ error: "Please add a 10-digit US mobile number." }, { status: 400 });
+    }
+    if (!lessonType || !experience || (forChild ? !studentName?.trim() || !studentAge : !ageRange)) {
       return NextResponse.json({ error: "Please fill in the lesson details." }, { status: 400 });
     }
     if (!isOpenSlot(start, await bookedTimes())) {
@@ -50,6 +55,9 @@ export async function POST(req) {
         student_name: forChild ? clean(studentName) : null,
         student_age: forChild ? parseInt(studentAge, 10) || null : null,
         experience: clean(experience), heard_from: clean(heardFrom),
+        age_range: forChild ? null : clean(ageRange, 20),
+        phone: phoneE164, sms_opt_in: smsOptIn === true,
+        sms_opt_in_at: smsOptIn === true ? new Date().toISOString() : null,
       });
       if (error) throw error;
     }
