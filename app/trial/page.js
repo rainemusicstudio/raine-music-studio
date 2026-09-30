@@ -11,7 +11,7 @@ function dayKey(iso) {
 const LESSON_TYPES = ["Voice", "Piano", "Music theory", "Songwriting", "Logic Pro & home recording", "Not sure yet"];
 const EXPERIENCE = ["Brand new", "Some experience", "Experienced", "Advanced / professional"];
 const AGE_RANGES = ["18–29", "30–39", "40–49", "50–59", "60+"];
-const COURSES = ["Music theory", "Songwriting", "Home recording & Logic Pro", "Ear training", "Sight-singing", "Audition prep", "Vocal health", "Group workshops"];
+const COURSES = ["Music theory", "Songwriting", "Home recording & Logic Pro", "Ear training", "Sight-singing", "Audition prep", "Vocal health", "Group workshops", "Book club", "Album of the week"];
 const HEARD_FROM = ["Google search", "Instagram", "Facebook", "TikTok", "A friend or family member", "Thumbtack", "Another teacher or school", "Other"];
 
 function timeLabel(iso) {
