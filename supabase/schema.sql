@@ -49,3 +49,43 @@ alter table bookings add column if not exists age_range text;
 
 -- Added 2026-09-30: classes/courses they'd like to hear about
 alter table bookings add column if not exists interests text[] default '{}';
+
+-- Added 2026-10-06: student app (lesson notes, practice, questions for next lesson)
+alter table students add column if not exists next_lesson_at timestamptz;
+alter table students add column if not exists zoom_url text;
+
+create table if not exists lesson_notes (
+  id uuid primary key default gen_random_uuid(),
+  student_id uuid not null references students(id) on delete cascade,
+  lesson_date date not null default current_date,
+  worked_on text,
+  wins text,
+  practice text,
+  link_url text,
+  created_at timestamptz not null default now()
+);
+create index if not exists lesson_notes_student_idx on lesson_notes (student_id, lesson_date desc);
+
+create table if not exists assignments (
+  id uuid primary key default gen_random_uuid(),
+  student_id uuid not null references students(id) on delete cascade,
+  title text not null,
+  details text,
+  done_at timestamptz,
+  archived boolean not null default false,
+  created_at timestamptz not null default now()
+);
+create index if not exists assignments_student_idx on assignments (student_id, created_at desc);
+
+create table if not exists questions (
+  id uuid primary key default gen_random_uuid(),
+  student_id uuid not null references students(id) on delete cascade,
+  body text not null,
+  answered_at timestamptz,
+  created_at timestamptz not null default now()
+);
+create index if not exists questions_student_idx on questions (student_id, created_at desc);
+
+alter table lesson_notes enable row level security;
+alter table assignments enable row level security;
+alter table questions enable row level security;

@@ -13,6 +13,7 @@ export default function Header() {
         <Link href="/#membership">Membership</Link>
         <Link href="/#shop">Studio Shop</Link>
         <Link href="/#about">About</Link>
+        <Link href="/portal">Student login</Link>
         <Link href="/trial">Book a trial</Link>
       </nav>
     </header>

@@ -202,3 +202,73 @@ img { max-width: 100%; }
 @media (max-width: 560px) { .field-row { grid-template-columns: 1fr; } }
 
 .hint { font-size: 14px; color: var(--text-muted); margin-top: -4px; }
+
+/* ---------- student app (/portal) ---------- */
+/* The app is full-screen on phones, so the website header and footer step aside. */
+body:has(.portal) .site-header, body:has(.portal) .site-footer { display: none; }
+
+.portal { max-width: 560px; margin: 0 auto; min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; }
+.portal-wide { max-width: 1100px; }
+.portal-login { align-items: center; justify-content: center; text-align: center; gap: 20px; padding: 40px 20px; }
+.portal-login h1 { margin: 0; font-family: var(--font-title); font-weight: 700; font-size: 48px; letter-spacing: -0.03em; color: var(--periwinkle); }
+.portal-login .portal-form { width: 100%; text-align: left; }
+.portal-form { display: flex; flex-direction: column; gap: 16px; }
+.portal-top {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  padding: calc(14px + env(safe-area-inset-top)) 20px 14px; border-bottom: 1px solid rgba(169, 174, 242, 0.1);
+  position: sticky; top: 0; background: var(--midnight); z-index: 2;
+}
+.portal-brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-serif); font-size: 19px; color: var(--text-strong); }
+.portal-link { background: none; border: none; padding: 4px 0; color: var(--link); font: inherit; font-size: 15px; cursor: pointer; }
+.portal-body { flex: 1; padding: 20px 20px 110px; display: flex; flex-direction: column; gap: 16px; }
+.portal-wide .portal-body { padding-bottom: 60px; }
+.portal-tabs {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 2; display: flex; justify-content: center;
+  background: var(--midnight-deep); border-top: 1px solid rgba(169, 174, 242, 0.12);
+  padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+}
+.portal-tabs button {
+  position: relative; flex: 1; max-width: 140px; background: none; border: none; cursor: pointer;
+  padding: 12px 4px; font-family: var(--font-body); font-size: 14px; font-weight: 600; color: var(--text-muted); border-radius: 12px;
+}
+.portal-tabs button[aria-current="page"] { color: var(--periwinkle); background: rgba(124, 128, 255, 0.1); }
+.tab-dot { position: absolute; top: 8px; right: calc(50% - 38px); width: 7px; height: 7px; border-radius: 50%; background: var(--tomato); }
+
+.p-title { margin: 0; font-family: var(--font-title); font-weight: 700; font-size: 34px; letter-spacing: -0.02em; color: var(--periwinkle); }
+.p-sub { margin: 12px 0 0; font-size: 13px; letter-spacing: 3px; text-transform: uppercase; font-weight: 600; color: var(--periwinkle-soft); }
+.p-card { background: var(--panel); border: 1px solid var(--panel-line); border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+.p-card h2 { margin: 0; font-family: var(--font-serif); font-weight: 400; font-size: 24px; line-height: 1.25; color: #fff; }
+.p-blue { background: var(--blue-card); border: none; box-shadow: 0 0 48px rgba(100, 149, 237, 0.22); }
+.p-blue .btn { align-self: flex-start; }
+.p-eyebrow { font-size: 12px; letter-spacing: 2.5px; text-transform: uppercase; font-weight: 600; color: var(--periwinkle-soft); }
+.p-blue .p-eyebrow { color: #e2e6fc; }
+.p-muted { margin: 0; color: var(--text-muted); font-size: 15px; line-height: 1.5; }
+.p-muted-light { margin: 0; color: #e2e6fc; font-size: 15px; }
+.p-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.p-progress { height: 10px; border-radius: 999px; background: rgba(169, 174, 242, 0.12); overflow: hidden; }
+.p-progress span { display: block; height: 100%; background: var(--lime); border-radius: 999px; transition: width 0.3s; }
+.p-note { display: flex; flex-direction: column; gap: 6px; }
+.p-note h3 { margin: 0 0 4px; font-family: var(--font-serif); font-weight: 400; font-size: 20px; color: var(--text-strong); }
+.p-note h4 { margin: 8px 0 0; font-size: 13px; font-weight: 600; color: var(--periwinkle-soft); }
+.p-note h4.lime { color: var(--lime); }
+.p-note p { margin: 0; font-size: 15px; line-height: 1.6; white-space: pre-wrap; }
+.p-checklist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.p-checklist label { display: flex; gap: 14px; align-items: flex-start; padding: 16px; border-radius: 16px; background: var(--panel); border: 1px solid var(--panel-line); cursor: pointer; }
+.p-checklist input, .p-teacher-q input { width: 22px; height: 22px; margin: 1px 0 0; flex-shrink: 0; accent-color: var(--lime); }
+.p-checklist span, .p-assign span, .p-teacher-q span { display: flex; flex-direction: column; gap: 4px; font-size: 16px; color: var(--text-strong); }
+.p-checklist small, .p-assign small, .p-teacher-q small, .p-student small { font-size: 14px; color: var(--text-muted); font-weight: 400; }
+.p-checklist label.done strong { text-decoration: line-through; text-decoration-color: var(--lime); color: var(--text-muted); }
+.p-question p { margin: 0; font-size: 16px; line-height: 1.5; color: var(--text-strong); }
+.p-question.answered, .p-teacher-q.answered, .p-assign.done { opacity: 0.6; }
+.btn-sm { padding: 11px 20px; font-size: 15px; }
+.p-student { flex-direction: row; justify-content: space-between; align-items: center; text-align: left; cursor: pointer; font: inherit; color: var(--text-strong); }
+.p-student > span:first-child { display: flex; flex-direction: column; gap: 4px; }
+.p-student strong { font-size: 17px; }
+.p-student-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+.p-student-meta em { font-style: normal; font-size: 13px; font-weight: 600; color: var(--midnight); background: var(--lime); padding: 3px 10px; border-radius: 999px; }
+.p-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; align-items: start; }
+.p-col { display: flex; flex-direction: column; gap: 14px; }
+.p-teacher-q { flex-direction: row; align-items: flex-start; gap: 14px; cursor: pointer; }
+.p-assign { flex-direction: row; justify-content: space-between; align-items: flex-start; }
+@media (max-width: 800px) { .p-grid { grid-template-columns: 1fr; } }
+.p-card > .portal-link { align-self: flex-start; }

@@ -13,6 +13,7 @@ export default function Footer() {
       <nav aria-label="Footer">
         <Link href="/policies">Studio policies</Link>
         <Link href="/trial">Book a trial</Link>
+        <Link href="/portal">Student login</Link>
         <a href="mailto:rainemusicstudio@gmail.com">Contact</a>
       </nav>
     </footer>
